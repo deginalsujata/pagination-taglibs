@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pg="http://pagination/pagination-jsf"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      >
+<ui:fragment rendered="#{paginationResult.totalSizeOfResult>0}">
+<div id="paginationRecordCountDiv" class="paginationRecordCount" style="width:#{paginationResult.optionWidth}px;">
+    <span class="paginationRecordCountCharacter">Records #{pparam.resultIndex+1} - #{pparam.resultIndex+paginationResult.noOfRecordOnCurrentPage} of #{paginationResult.totalSizeOfResult}</span>
+</div>
+</ui:fragment>
+
+<div>
+<input id="resultIndex" name="resultIndex" type="hidden" value="#{pparam.resultIndex}"/>
+<input id="recordPerPage" name="recordPerPage" type="hidden" value="#{pparam.recordPerPage}"/>
+<input id="sortName" name="sortName" type="hidden" value="#{pparam.sortName}"/>
+<input id="sortAscDesc" name="sortAscDesc" type="hidden" value="#{pparam.sortAscDesc}"/>
+</div>
+
+<ui:fragment rendered="#{paginationResult.totalSizeOfResult==0}">
+    <div class="paginationNoRecordText" style="width:#{paginationResult.optionWidth}px;">
+        No records can be found.
+    </div>
+</ui:fragment>
+<ui:fragment rendered="#{paginationResult.totalSizeOfResult>0}">
+    <div id="paginationRecordsDiv" style="width:#{paginationResult.optionWidth}px;">
+    <table class="sltable" style="width:#{paginationResult.optionWidth}px;">
+        <tr class="header">
+            <ui:fragment rendered="#{paginationResult.optionDisplaySerialNo}">
+                <th class="header"><div class="serialNoHeader"></div></th>
+            </ui:fragment>
+            <ui:fragment rendered="#{paginationResult.optionDisplayCheckbox}">
+                <th class="header"><input id="selectall" class="paginationCheckbox" type="checkbox" value="Y" name="selectall"/><div class="checkboxHeader"></div></th>
+            </ui:fragment>
+            <ui:repeat var="col" value="#{paginationResult.columns}">
+            <th class="header">
+                <ui:fragment rendered="#{empty col.orderColumns}">
+                    #{col.columnName}
+                </ui:fragment>
+                <ui:fragment rendered="#{!empty col.orderColumns}">
+                    <pg:pgSortingLink styleClass="header" url="#{request.contextPath}#{paginationResult.pageLink}" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}" columnName="#{col.columnName}" orderColumns="#{col.orderColumns}" orderDirections="#{col.orderDirections}" defaultSortName="#{paginationResult.defaultSortName}" defaultSortAscDesc="#{paginationResult.defaultSortAscDesc}">
+                    <span class="paginationColumnHeader">#{col.columnName}</span>
+                    <ui:fragment rendered="#{col.columnName==pparam.sortName}">
+                        <ui:fragment rendered="#{empty pparam.sortAscDesc}">
+                            <span class="sortarrow">&#9650;</span>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{!empty pparam.sortAscDesc and fn:startsWith(pparam.sortAscDesc,'a')}">
+                            <span class="sortarrow">&#9650;</span>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{!empty pparam.sortAscDesc and fn:startsWith(pparam.sortAscDesc,'d')}">
+                            <span class="sortarrow">&#9660;</span>
+                        </ui:fragment>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{empty pparam.sortName and not empty paginationResult.defaultSortName and not empty paginationResult.defaultSortAscDesc and col.columnName==paginationResult.defaultSortName}">
+                        <ui:fragment rendered="#{fn:startsWith(paginationResult.defaultSortAscDesc,'a')}">
+                            <span class="sortarrow">&#9650;</span>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{fn:startsWith(paginationResult.defaultSortAscDesc,'d')}">
+                            <span class="sortarrow">&#9660;</span>
+                        </ui:fragment>
+                    </ui:fragment>
+                    </pg:pgSortingLink>
+                </ui:fragment>
+                <ui:fragment rendered="#{col.width != null}">
+                    <div style="height:1px;padding-left:#{col.width}px;"></div>
+                </ui:fragment>
+            </th>
+            </ui:repeat> 
+        </tr>
+        <ui:repeat var="item" value="#{paginationResult.resultBoList}">
+        <tr class="#{(item.rowIndex%2==0)? 'evenrow':'oddrow'}">
+            <ui:fragment rendered="#{paginationResult.optionDisplaySerialNo}">
+                <td class="cell"><h:outputText value="#{item.rowIndex}"/></td>
+            </ui:fragment>
+            <ui:fragment rendered="#{paginationResult.optionDisplayCheckbox}">
+                <td class="cell"><input class="paginationCheckbox" type="checkbox" value="#{item.pk}" name="selectedIds"/></td>
+            </ui:fragment>
+            <ui:insert name="columnsContent"/>
+        </tr>
+        </ui:repeat>
+        <tr style="border-left:0px;">
+            <ui:fragment rendered="#{paginationResult.optionDisplaySerialNo and paginationResult.optionDisplayCheckbox}">
+                <td id="ie-padding-problem" style="height:20px;display:none;" colspan="#{fn:length(paginationResult.columns)+2}"></td>
+            </ui:fragment>
+            <ui:fragment rendered="#{!paginationResult.optionDisplaySerialNo and paginationResult.optionDisplayCheckbox}">
+                <td id="ie-padding-problem" style="height:20px;display:none;" colspan="#{fn:length(paginationResult.columns)+1}"></td>
+            </ui:fragment>
+            <ui:fragment rendered="#{paginationResult.optionDisplaySerialNo and !paginationResult.optionDisplayCheckbox}">
+                <td id="ie-padding-problem" style="height:20px;display:none;" colspan="#{fn:length(paginationResult.columns)+1}"></td>
+            </ui:fragment>
+            <ui:fragment rendered="#{!paginationResult.optionDisplaySerialNo and !paginationResult.optionDisplayCheckbox}">
+                <td id="ie-padding-problem" style="height:20px;display:none;" colspan="#{fn:length(paginationResult.columns)}"></td>
+            </ui:fragment>
+        </tr>
+    </table>
+    </div>
+</ui:fragment>
+<ui:insert name="contentAfterLastRow"/>
+<pg:pagination_page_control paginationResult="#{paginationResult}" pparam="#{pparam}">
+</pg:pagination_page_control>
+</ui:composition>

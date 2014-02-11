@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+    "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+     <namespace>http://pagination/pagination-jsf</namespace>
+ 
+    <tag>
+        <tag-name>pgLink</tag-name>
+        <component>
+            <component-type>pagination-url-component</component-type>
+        </component>
+    </tag>
+    
+    <tag>
+        <tag-name>pgSortingLink</tag-name>
+        <component>
+            <component-type>pagination-sorting-url-component</component-type>
+        </component>
+    </tag>
+    
+     <tag>
+          <tag-name>pagination</tag-name>
+          <source>tags/jsf/pagination.xhtml</source>
+     </tag>
+ 
+     <tag>
+          <tag-name>pagination_ajax</tag-name>
+          <source>tags/jsf/pagination_ajax.xhtml</source>
+     </tag>
+ 
+     <tag>
+          <tag-name>pagination_page_control</tag-name>
+          <source>tags/jsf/pagination_page_control.xhtml</source>
+     </tag>
+</facelet-taglib>

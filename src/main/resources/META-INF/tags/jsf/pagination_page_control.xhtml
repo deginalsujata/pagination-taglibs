@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pg="http://pagination/pagination-jsf"
+      >
+
+<ui:fragment rendered="#{paginationResult.totalSizeOfResult>0 and paginationResult.totalNoOfPage!=1}">
+    <div id="paginationLinkDiv" class="paginationLink" style="width:#{paginationResult.optionWidth}px;">
+        <table class="pagination_page">
+            <tr>
+                <td></td>
+                <td class="paginationLinkFirst">
+                    <ui:fragment rendered="#{paginationResult.previousPageExists}">
+                        <pg:pgLink url="#{request.contextPath}#{paginationResult.pageLink}?resultIndex=0" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}" title="First"><span id="paginationLinkFirstCharacter" class="paginationLinkFirstCharacter">&#171;</span></pg:pgLink>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!paginationResult.previousPageExists}">
+                        <span id="paginationLinkFirstCharacterDisabled" class="paginationLinkFirstCharacter">&#171;</span>
+                    </ui:fragment>
+                </td>
+                <td class="paginationLinkPrevious">
+                    <ui:fragment rendered="#{paginationResult.previousPageExists}">
+                        <pg:pgLink url="#{request.contextPath}#{paginationResult.pageLink}?resultIndex=#{paginationResult.resultIndexOfPreviousPage}" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}" title="Previous"><span id="paginationLinkPreviousCharacter" class="paginationLinkPreviousCharacter">&#8249;</span></pg:pgLink>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!paginationResult.previousPageExists}">
+                        <span id="paginationLinkPreviousCharacterDisabled" class="paginationLinkPreviousCharacter">&#8249;</span>
+                    </ui:fragment>
+                </td>
+                <td class="paginationLinkDotDotBegin">
+                    <ui:fragment rendered="#{paginationResult.showDotDotBegin}"><span id="paginationLinkDotDotBeginCharacter" class="paginationLinkDotDotBeginCharacter">...</span></ui:fragment>
+                </td>
+                <td class="paginationLinkPages">
+                    <ui:repeat var="puPage" value="#{paginationResult.listOfPageNos}">
+                        <ui:fragment rendered="#{puPage.currentPage}"><span id="paginationLinkActivePageCharacter" class="paginationLinkActivePageCharacter">#{puPage.pageNo}</span></ui:fragment>
+                        <ui:fragment rendered="#{!puPage.currentPage}">
+                            <pg:pgLink url="#{request.contextPath}#{paginationResult.pageLink}?resultIndex=#{paginationResult.recordPerPage*(puPage.pageNo-1)}" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}"><span class="paginationLinkPagesCharacter">#{puPage.pageNo}</span></pg:pgLink>
+                        </ui:fragment>
+                        <span class="paginationLinkBetweenPages"></span>
+                    </ui:repeat>
+                </td>
+                <td class="paginationLinkDotDotEnd">
+                    <ui:fragment rendered="#{paginationResult.showDotDotEnd}"><span id="paginationLinkDotDotEndCharacter" class="paginationLinkDotDotEndCharacter">...</span></ui:fragment>
+                </td>
+                <td class="paginationLinkNext">
+                    <ui:fragment rendered="#{paginationResult.nextPageExists}">
+                        <pg:pgLink url="#{request.contextPath}#{paginationResult.pageLink}?resultIndex=#{paginationResult.resultIndexOfNextPage}" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}" title="Next"><span id="paginationLinkNextCharacter" class="paginationLinkNextCharacter">&#8250;</span></pg:pgLink>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!paginationResult.nextPageExists}">
+                        <span id="paginationLinkNextCharacterDisabled" class="paginationLinkNextCharacter">&#8250;</span>
+                    </ui:fragment>
+                </td>
+                <td class="paginationLinkLast">
+                    <ui:fragment rendered="#{paginationResult.nextPageExists}">
+                        <pg:pgLink url="#{request.contextPath}#{paginationResult.pageLink}?resultIndex=#{paginationResult.resultIndexOfLastPage}" ajax="#{paginationResult.ajax}" rewriteUrl="#{paginationResult.rewriteUrl}" pparam="#{pparam}" title="Last"><span id="paginationLinkLastCharacter" class="paginationLinkLastCharacter">&#187;</span></pg:pgLink>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!paginationResult.nextPageExists}">
+                        <span id="paginationLinkLastCharacterDisabled" class="paginationLinkLastCharacter">&#187;</span>
+                    </ui:fragment>
+                </td>
+            </tr>
+        </table>
+    </div>
+</ui:fragment>
+
+</ui:composition>
