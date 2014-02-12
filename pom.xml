@@ -30,7 +30,7 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/paginationspring/pagination-taglibs/</url>
+        <url>git@github.com:paginationspring/pagination-taglibs.git</url>
         <connection>scm:git:git@github.com:paginationspring/pagination-taglibs.git</connection>
         <developerConnection>scm:git:git@github.com:paginationspring/pagination-taglibs.git</developerConnection>
     </scm>
