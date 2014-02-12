@@ -8,7 +8,7 @@
     <groupId>com.github.paginationspring</groupId>
     <artifactId>pagination-taglibs</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>pagination-taglibs</name>
 
     <properties>
@@ -115,6 +115,7 @@
                         <configuration>
                             <keyname>BDA1DB82</keyname>
                             <homedir>C:\Users\sllau\AppData\Roaming\gnupg</homedir>
+                            <passphrase>${gpg.passphrase}</passphrase>
                         </configuration>
                     </plugin>
         </plugins>
@@ -151,6 +152,7 @@
                         <configuration>
                             <keyname>BDA1DB82</keyname>
                             <homedir>C:\Users\sllau\AppData\Roaming\gnupg</homedir>
+                            <passphrase>${gpg.passphrase}</passphrase>
                         </configuration>
                         <executions>
                             <execution>
